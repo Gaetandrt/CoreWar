@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+redirect = '> temp.log 2> temp.log'
+unless ARGV.size == 1
+ STDERR.puts "ERROR:\tWrong number of argument !"
+ STDERR.puts "USAGE:\t\n\t./show_cor [path_to_file].s"
+ exit 84
+end
+unless File.exist?(ARGV[0])
+ STDERR.puts "ERROR:\t#{ARGV[0]} don't exist !"
+ exit 84
+end
+file = ARGV[0]
+if File.exist?("#{File.basename(file,'.*')}.cor")
+    system "rm -rf #{File.basename(file,'.*')}.cor"
+end
+system "make fclean #{redirect}"
+system "make only_asm #{redirect}"
+system "./asm/asm #{file} #{redirect}"
+file = "#{File.basename(file,'.*')}.cor"
+system "hexdump -C #{file}"
+system "make fclean #{redirect}"
+system "rm -rf temp.log && rm -rf #{file}"

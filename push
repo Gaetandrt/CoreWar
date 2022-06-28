@@ -1,0 +1,46 @@
+#!/usr/bin/env ruby
+def print_in_color txt, color, line_break
+ color = "\033[0;30m" if color == 'black'
+ color = "\033[0;31m" if color == 'red'
+ color = "\033[0;32m" if color == 'green'
+ color = "\033[0;33m" if color == 'yellow'
+ color = "\033[0;34m" if color == 'blue'
+ color = "\033[0;35m" if color == 'purple'
+ color = "\033[0;36m" if color == 'cyan'
+ color = "\033[0;37m" if color == 'white'
+ printf("#{color}");
+ puts  txt if line_break == true
+ print txt if line_break == false
+ printf("\033[0m");
+end
+if ARGV.size >= 1
+ msg = ARGV[0]
+else
+ msg = "CoreWar: continue/update"
+end
+system "make fclean"
+system "clear"
+print_in_color("|-> GIT PUSH:", "green", true)
+print_in_color("| MSG = \"", "green", false)
+print_in_color("#{msg}", "purple", false)
+print_in_color("\"", "green", true)
+print_in_color("| loading ...", "green", true)
+time = Time.new
+system "echo \"#{time.inspect}:\" >> push_fail.log"
+print_in_color("| add all modified files : ", "green", false)
+system "git add * > temp.log 2>> push_fail.log"
+print_in_color("success !", "cyan", true)
+print_in_color("| commit with the following message \"", "green", false)
+print_in_color("#{msg}", "purple", false)
+print_in_color("\" : ", "green", false)
+system "git commit -m \"#{msg}\" > temp.log 2>> push_fail.log"
+print_in_color("success !", "cyan", true)
+print_in_color("| check git repertory and pull if needed : ", "green", false)
+system "git pull > temp.log 2>> push_fail.log"
+print_in_color("success !", "cyan", true)
+print_in_color("| push : ", "green", false)
+system "git push > temp.log 2>> push_fail.log"
+print_in_color("success !", "cyan", true)
+print_in_color("| FINISHED !", "green", true)
+system "echo \"\n\" >> push_fail.log"
+system "rm -rf temp.log && rm -rf push_fail.log"
