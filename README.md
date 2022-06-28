@@ -20,9 +20,9 @@ Pour lancer le jeu, il suffit de lancer le programme `corewar` en ligne de comma
 Pour lancer le binaire, veuillez respecter le format suivant:
 
 ```bash
-$ ./asm/asm [fichier_contenant_un_champion]
-$ ./corewar/corewar [1er_champion] [2eme_champion] [3eme_champion] [4eme_champion]
-$ ./bonus/corewar [1er_champion] [2eme_champion] [3eme_champion] [4eme_champion]
+$ ./asm/asm [champion]
+$ ./corewar/corewar [1er_champion] [...]
+$ ./bonus/corewar [1er_champion] [...]
 ```
 
 ## Fabriqué avec
